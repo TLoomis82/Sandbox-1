@@ -4,7 +4,10 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import type { Job } from "../data/types";
 import { jobStart } from "../lib/dates";
 import { careerPath } from "../lib/geo";
+import { clearFloorHighlight, installFloorHighlight, showFloorHighlight } from "../lib/floorHighlight";
+import { logoUrl } from "./CompanyLogo";
 import { groupByPlace, isLocated, type Located, type Place } from "../lib/places";
+import { GlobeSpinner } from "./GlobeSpinner";
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN as string | undefined;
 const PATH_LAYERS = ["career-glow", "career-line"];
@@ -99,8 +102,22 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
       else console.error("Mapbox error", e.error);
     });
     m.addControl(new mapboxgl.AttributionControl({ compact: true }), "bottom-left");
-    m.on("style.load", () => setReady(true));
+    m.on("style.load", () => {
+      installFloorHighlight(m);
+      setReady(true);
+    });
     m.on("click", (e) => {
+      // Dev only: Option/Alt-click copies "lat, lng" for placing pins precisely.
+      if (import.meta.env.DEV && e.originalEvent.altKey) {
+        const text = `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`;
+        navigator.clipboard?.writeText(text).catch(() => {});
+        new mapboxgl.Popup({ closeButton: false, className: "coords-popup" })
+          .setLngLat(e.lngLat)
+          .setHTML(`<strong>Copied</strong><br>${text}`)
+          .addTo(m);
+        console.info("Map coordinates (lat, lng):", text);
+        return;
+      }
       if (!(e.originalEvent.target as HTMLElement).closest(".marker")) latest.current.onSelect(null);
     });
     // Company labels only appear once pins are spread out enough not to collide.
@@ -136,9 +153,20 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
       el.className = "marker";
       el.style.setProperty("--pin", lead.color);
       el.setAttribute("aria-label", `${place.jobs.map((j) => j.company).join(" and ")}, ${lead.location.city}`);
+      // Show the monogram first and swap in the logo only once it loads, so a
+      // missing logo file never shows a broken image.
       const pin = document.createElement("div");
       pin.className = "pin";
-      pin.innerHTML = lead.logo ? `<img src="${lead.logo}" alt="" />` : `<span>${lead.monogram}</span>`;
+      const monogram = document.createElement("span");
+      monogram.textContent = lead.monogram;
+      pin.append(monogram);
+      const logo = new Image();
+      logo.alt = "";
+      logo.onload = () => {
+        pin.replaceChildren(logo);
+        pin.classList.add("pin--logo");
+      };
+      logo.src = logoUrl(lead);
       const label = document.createElement("div");
       label.className = "pin-label";
       label.textContent = place.jobs.map((j) => j.company).join(" · ");
@@ -210,19 +238,28 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
     if (!m || !ready) return;
     stopFrame();
     if (intro) {
-      m.setPadding(
-        isDesktop()
-          ? { left: window.innerWidth * 0.42, right: 0, top: 0, bottom: 0 }
-          : { top: window.innerHeight * 0.5, left: 0, right: 0, bottom: 0 },
-      );
-      if (reducedMotion()) return;
-      const spin = () => {
-        const c = m.getCenter();
-        m.setCenter([c.lng + 0.035, c.lat]);
-        frame.current = requestAnimationFrame(spin);
+      // Desktop: the globe sits beside the text. Mobile: centered, revealed by
+      // scrolling the text away. Either way the whole Earth fits on screen.
+      const frameGlobe = (duration: number) => {
+        m.setPadding(isDesktop() ? { left: introTextRight(), right: 0, top: 0, bottom: 0 } : { left: 0, right: 0, top: 0, bottom: 0 });
+        const far = m.getZoom() > 2.5 || m.getPitch() > 0;
+        // Coming back home from a building: pull out first, then fit.
+        const zoom = far ? 1.6 : fitGlobeZoom(m);
+        m.easeTo({ center: [m.getCenter().lng, 28], zoom, pitch: 0, bearing: 0, duration: reducedMotion() ? 0 : duration });
+        if (far) m.once("moveend", () => m.easeTo({ zoom: fitGlobeZoom(m), duration: reducedMotion() ? 0 : 600 }));
       };
-      frame.current = requestAnimationFrame(spin);
-      return stopFrame;
+      frameGlobe(1800);
+      let t = 0;
+      const onResize = () => {
+        clearTimeout(t);
+        t = window.setTimeout(() => frameGlobe(400), 150);
+      };
+      window.addEventListener("resize", onResize);
+      // GlobeSpinner drives the spin from here.
+      return () => {
+        clearTimeout(t);
+        window.removeEventListener("resize", onResize);
+      };
     }
     m.setPadding({ left: 0, right: 0, top: 0, bottom: 0 });
     const t0 = performance.now();
@@ -255,6 +292,7 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
     const m = map.current;
     if (!m || !ready) return;
     const job = located.find((j) => j.id === selectedId);
+    clearFloorHighlight(m);
     if (!job) return;
     stopFrame();
     m.flyTo({
@@ -276,6 +314,13 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
       frame.current = requestAnimationFrame(spin);
     };
     m.once("moveend", orbit);
+    // Once the camera has landed and the building tiles are in, light up the floor.
+    const { floor } = job.location;
+    const highlight = () => {
+      if (floor) showFloorHighlight(m, [job.location.lng, job.location.lat], floor, job.color);
+    };
+    const onLanded = () => m.once("idle", highlight);
+    if (floor) m.once("moveend", onLanded);
     // Any user gesture stops the orbit.
     const interrupt = () => stopFrame();
     m.on("mousedown", interrupt);
@@ -284,6 +329,8 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
     return () => {
       stopFrame();
       m.off("moveend", orbit);
+      m.off("moveend", onLanded);
+      m.off("idle", highlight);
       m.off("mousedown", interrupt);
       m.off("touchstart", interrupt);
       m.off("wheel", interrupt);
@@ -307,6 +354,7 @@ export function MapView({ jobs, visibleIds, selectedId, onSelect, dark, intro }:
   return (
     <>
       <div ref={container} className="map" />
+      <GlobeSpinner map={ready ? map.current : null} active={intro && !error} />
       {error && (
         <div className="map-missing">
           <div className="glass map-missing__card">
@@ -331,8 +379,33 @@ function mainCluster(jobs: Located[]): Located[] {
   return americas.length >= rest.length ? americas : rest;
 }
 
+/**
+ * The zoom at which the whole globe fits its share of the screen. At globe
+ * zooms the on-screen radius doubles with each zoom level, so measure the
+ * current radius and scale from there.
+ */
+function fitGlobeZoom(m: mapboxgl.Map): number {
+  const c = m.getCenter();
+  const a = m.project(c);
+  const b = m.project([c.lng, Math.min(89, c.lat + 1)]);
+  const r = (Math.hypot(a.x - b.x, a.y - b.y) * 180) / Math.PI;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  // Room for the glow, the hint under the globe, and the top bar.
+  const target = isDesktop() ? Math.min((w - introTextRight()) * 0.44, (h - 120) * 0.42) : Math.min(w * 0.44, (h - 160) * 0.4);
+  if (!(r > 0)) return m.getZoom();
+  return Math.max(0.2, Math.min(2.4, m.getZoom() + Math.log2(target / r)));
+}
+
 function fitPadding() {
   return isDesktop()
     ? { top: 140, bottom: 240, left: 100, right: 100 }
     : { top: 120, bottom: 260, left: 40, right: 40 };
+}
+
+/** Where the home screen's text block ends, so the globe gets the space to its right. */
+function introTextRight(): number {
+  const el = document.querySelector(".intro__content");
+  const right = el ? el.getBoundingClientRect().right : window.innerWidth * 0.42;
+  return Math.min(window.innerWidth * 0.62, right + 24);
 }

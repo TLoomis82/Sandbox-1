@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif">
+  <!-- Illustration of proximity-aware product info in a retail store. Not a real screenshot. -->
+  <defs>
+    <linearGradient id="floor" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5f5f7"/>
+      <stop offset="1" stop-color="#ebebf0"/>
+    </linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9b48a"/>
+      <stop offset="1" stop-color="#c79c6c"/>
+    </linearGradient>
+    <linearGradient id="dev" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3a3c"/>
+      <stop offset="1" stop-color="#1c1c1e"/>
+    </linearGradient>
+    <radialGradient id="pulse">
+      <stop offset="0" stop-color="#0a84ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#0a84ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1200" fill="url(#floor)"/>
+
+  <!-- store floor -->
+  <rect x="70" y="90" width="1010" height="1020" rx="36" fill="#ffffff" stroke="#d2d2d7" stroke-width="2"/>
+  <text x="110" y="148" font-size="22" font-weight="600" fill="#86868b">Store floor</text>
+
+  <!-- iPhone table (top left): phones standing upright -->
+  <circle cx="330" cy="330" r="190" fill="url(#pulse)"/>
+  <rect x="200" y="280" width="260" height="100" rx="14" fill="url(#wood)"/>
+  <rect x="232" y="298" width="30" height="62" rx="7" fill="url(#dev)"/>
+  <rect x="282" y="298" width="30" height="62" rx="7" fill="url(#dev)"/>
+  <rect x="332" y="298" width="30" height="62" rx="7" fill="url(#dev)"/>
+  <rect x="382" y="298" width="30" height="62" rx="7" fill="url(#dev)"/>
+  <text x="330" y="420" font-size="20" fill="#6e6e73" text-anchor="middle">iPhone</text>
+
+  <!-- iPad table (top right): the customer's nearest table -->
+  <circle cx="790" cy="330" r="200" fill="url(#pulse)"/>
+  <circle cx="790" cy="330" r="200" fill="url(#pulse)"/>
+  <rect x="660" y="280" width="260" height="100" rx="14" fill="url(#wood)"/>
+  <rect x="680" y="296" width="62" height="68" rx="9" fill="url(#dev)"/>
+  <rect x="759" y="296" width="62" height="68" rx="9" fill="url(#dev)"/>
+  <rect x="838" y="296" width="62" height="68" rx="9" fill="url(#dev)"/>
+  <text x="790" y="420" font-size="20" font-weight="600" fill="#0a84ff" text-anchor="middle">iPad · nearest</text>
+
+  <!-- MacBook table (bottom left): open laptops -->
+  <circle cx="330" cy="790" r="190" fill="url(#pulse)"/>
+  <rect x="200" y="740" width="260" height="100" rx="14" fill="url(#wood)"/>
+  <rect x="222" y="760" width="62" height="40" rx="5" fill="url(#dev)"/>
+  <rect x="217" y="800" width="72" height="7" rx="3" fill="#2c2c2e"/>
+  <rect x="300" y="760" width="62" height="40" rx="5" fill="url(#dev)"/>
+  <rect x="295" y="800" width="72" height="7" rx="3" fill="#2c2c2e"/>
+  <rect x="378" y="760" width="62" height="40" rx="5" fill="url(#dev)"/>
+  <rect x="373" y="800" width="72" height="7" rx="3" fill="#2c2c2e"/>
+  <text x="330" y="880" font-size="20" fill="#6e6e73" text-anchor="middle">MacBook</text>
+
+  <!-- iMac table (bottom right): desktop displays on stands -->
+  <circle cx="790" cy="790" r="190" fill="url(#pulse)"/>
+  <rect x="660" y="740" width="260" height="100" rx="14" fill="url(#wood)"/>
+  <rect x="682" y="752" width="100" height="62" rx="6" fill="url(#dev)"/>
+  <rect x="726" y="814" width="12" height="12" fill="#2c2c2e"/>
+  <rect x="712" y="824" width="40" height="5" rx="2" fill="#2c2c2e"/>
+  <rect x="798" y="752" width="100" height="62" rx="6" fill="url(#dev)"/>
+  <rect x="842" y="814" width="12" height="12" fill="#2c2c2e"/>
+  <rect x="828" y="824" width="40" height="5" rx="2" fill="#2c2c2e"/>
+  <text x="790" y="880" font-size="20" fill="#6e6e73" text-anchor="middle">iMac</text>
+
+  <!-- customer path: in through the centre aisle, out of the way of tables and labels -->
+  <path d="M 200 1040 C 430 1040, 560 980, 560 760 C 560 600, 600 500, 730 480" fill="none" stroke="#1d1d1f" stroke-width="4" stroke-dasharray="4 14" stroke-linecap="round" opacity="0.55"/>
+  <circle cx="200" cy="1040" r="10" fill="#1d1d1f" opacity="0.35"/>
+  <circle cx="752" cy="478" r="18" fill="#0a84ff"/>
+  <circle cx="752" cy="478" r="30" fill="none" stroke="#0a84ff" stroke-width="3" opacity="0.4"/>
+
+  <!-- phone with nearest-table info -->
+  <g filter="url(#shadow)">
+    <rect x="1150" y="190" width="380" height="780" rx="60" fill="#1d1d1f"/>
+    <rect x="1164" y="204" width="352" height="752" rx="48" fill="#ffffff"/>
+  </g>
+  <rect x="1290" y="220" width="100" height="26" rx="13" fill="#1d1d1f"/>
+  <text x="1194" y="300" font-size="17" font-weight="600" fill="#0a84ff">NEARBY</text>
+  <text x="1194" y="338" font-size="30" font-weight="700" fill="#1d1d1f">You're at the</text>
+  <text x="1194" y="374" font-size="30" font-weight="700" fill="#1d1d1f">iPad table</text>
+
+  <rect x="1194" y="408" width="292" height="200" rx="22" fill="#f5f5f7"/>
+  <rect x="1290" y="430" width="100" height="108" rx="12" fill="url(#dev)"/>
+  <rect x="1216" y="556" width="170" height="16" rx="8" fill="#1d1d1f"/>
+  <rect x="1216" y="582" width="110" height="12" rx="6" fill="#86868b"/>
+
+  <rect x="1194" y="628" width="292" height="62" rx="16" fill="#f5f5f7"/>
+  <text x="1216" y="666" font-size="18" fill="#1d1d1f">Compare iPad models</text>
+  <rect x="1194" y="702" width="292" height="62" rx="16" fill="#f5f5f7"/>
+  <text x="1216" y="740" font-size="18" fill="#1d1d1f">Check availability</text>
+  <rect x="1194" y="822" width="292" height="62" rx="31" fill="#0a84ff"/>
+  <text x="1340" y="860" font-size="19" font-weight="600" fill="#ffffff" text-anchor="middle">Get help here</text>
+
+  <text x="1340" y="1040" font-size="20" fill="#6e6e73" text-anchor="middle">Details follow the customer</text>
+  <text x="1340" y="1068" font-size="20" fill="#6e6e73" text-anchor="middle">to the closest table</text>
+  <text x="800" y="1170" font-size="20" fill="#86868b" text-anchor="middle">Illustration</text>
+</svg>

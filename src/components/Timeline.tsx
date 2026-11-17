@@ -2,9 +2,23 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Job } from "../data/types";
 import type { Filters } from "../lib/filters";
 import { currentYear, jobEnd, jobRangeLabel, jobStart } from "../lib/dates";
-import { PlayIcon, StopIcon } from "./icons";
+import { NextIcon, PauseIcon, PlayIcon, PrevIcon } from "./icons";
+import { formatSeconds } from "../lib/readingTime";
 
 const LANE_HEIGHT = 30;
+
+export type TourControls = {
+  /** Index into the (chronological) jobs list, or null when no tour is running. */
+  step: number | null;
+  paused: boolean;
+  /** Time spent at each stop before advancing. */
+  stepMs: number;
+  onStart: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  onTogglePause: () => void;
+  onStop: () => void;
+};
 
 type Props = {
   jobs: Job[];
@@ -14,8 +28,7 @@ type Props = {
   filters: Filters;
   bounds: [number, number];
   onFiltersChange: (f: Filters) => void;
-  tourStep: number | null;
-  onTourToggle: () => void;
+  tour: TourControls;
 };
 
 /** Greedy lane packing so overlapping roles stack instead of colliding. */
@@ -39,8 +52,7 @@ export function Timeline({
   filters,
   bounds,
   onFiltersChange,
-  tourStep,
-  onTourToggle,
+  tour,
 }: Props) {
   const [min, maxYear] = bounds;
   const max = maxYear + 1;
@@ -71,6 +83,7 @@ export function Timeline({
   const ticks: number[] = [];
   for (let y = min; y <= max; y += 2) ticks.push(y);
 
+  const tourStep = tour.step;
   const touring = tourStep !== null;
   const companyLabel =
     filters.companies.size === 0
@@ -78,18 +91,67 @@ export function Timeline({
       : `${filters.companies.size} ${filters.companies.size === 1 ? "company" : "companies"}`;
 
   return (
-    <section className="timeline glass" aria-label="Career timeline">
-      <div className="timeline__head">
-        <button className={`btn btn--small ${touring ? "btn--plain" : "btn--primary"}`} onClick={onTourToggle}>
-          {touring ? (
-            <>
-              <StopIcon size={12} /> Stop · {tourStep + 1}/{jobs.length}
-            </>
-          ) : (
-            <>
-              <PlayIcon size={12} /> Play my career
-            </>
-          )}
+    <section className={`timeline glass ${touring ? "timeline--touring" : ""}`} aria-label="Career timeline">
+      {touring && (
+        <div className="tour">
+          <div className="tour__controls" role="group" aria-label="Tour controls">
+            <button
+              className="icon-btn"
+              onClick={tour.onPrev}
+              disabled={tourStep === 0}
+              aria-label="Previous company"
+              title="Previous (←)"
+            >
+              <PrevIcon />
+            </button>
+            <button
+              className="icon-btn icon-btn--primary"
+              onClick={tour.onTogglePause}
+              aria-label={tour.paused ? "Resume tour" : "Pause tour"}
+              title={tour.paused ? "Resume (space)" : "Pause (space)"}
+            >
+              {tour.paused ? <PlayIcon /> : <PauseIcon />}
+            </button>
+            <button className="icon-btn" onClick={tour.onNext} aria-label="Next company" title="Next (→)">
+              <NextIcon />
+            </button>
+          </div>
+          <div className="tour__label" aria-live="polite">
+            <span className="tour__count">
+              {tourStep + 1} / {jobs.length}
+            </span>
+            <span className="tour__company">{jobs[tourStep]?.company}</span>
+            {tour.paused ? (
+              <span className="tour__paused">Paused · press play to continue</span>
+            ) : (
+              <span className="tour__time" title="Estimated time to read this stop">
+                {formatSeconds(tour.stepMs)} read
+              </span>
+            )}
+          </div>
+          <button className="btn btn--plain btn--small" onClick={tour.onStop}>
+            End tour
+          </button>
+          {/* The fill's animation is the step timer: it ends, the tour advances. */}
+          <div className="tour__progress">
+            <div
+              key={tourStep}
+              className="tour__fill"
+              style={
+                {
+                  "--tour-ms": `${tour.stepMs}ms`,
+                  animationPlayState: tour.paused ? "paused" : "running",
+                } as React.CSSProperties
+              }
+              onAnimationEnd={tour.onNext}
+            />
+          </div>
+        </div>
+      )}
+
+      <div className={`timeline__head ${touring ? "timeline__head--hidden" : ""}`}>
+        <button className="btn btn--small btn--primary" onClick={tour.onStart}>
+          <PlayIcon size={12} /> Play my career
         </button>
 
         <div className="popover-anchor" ref={popover}>

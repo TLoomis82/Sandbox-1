@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, sans-serif">
+  <!-- Illustration of a retail shopping app on iPad. Not a real screenshot. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f5f7"/>
+      <stop offset="1" stop-color="#e8e8ed"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#64d2ff"/>
+      <stop offset="0.55" stop-color="#5e5ce6"/>
+      <stop offset="1" stop-color="#bf5af2"/>
+    </linearGradient>
+    <linearGradient id="dev" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a3a3c"/>
+      <stop offset="1" stop-color="#1c1c1e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="30" stdDeviation="34" flood-color="#000" flood-opacity="0.22"/>
+    </filter>
+    <clipPath id="screen"><rect x="196" y="186" width="1208" height="828" rx="22"/></clipPath>
+  </defs>
+
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+
+  <!-- iPad body (landscape) -->
+  <rect x="150" y="140" width="1300" height="920" rx="64" fill="#1d1d1f" filter="url(#shadow)"/>
+  <rect x="158" y="148" width="1284" height="904" rx="58" fill="#2c2c2e"/>
+  <circle cx="176" cy="600" r="7" fill="#3a3a3c"/>
+
+  <g clip-path="url(#screen)">
+    <rect x="196" y="186" width="1208" height="828" fill="#ffffff"/>
+
+    <!-- status + nav -->
+    <rect x="196" y="186" width="1208" height="96" fill="#fbfbfd"/>
+    <text x="236" y="216" font-size="17" fill="#1d1d1f" font-weight="600">9:41</text>
+    <rect x="1330" y="204" width="40" height="16" rx="4" fill="none" stroke="#1d1d1f" stroke-width="2"/>
+    <rect x="1333" y="207" width="28" height="10" rx="2" fill="#1d1d1f"/>
+    <text x="236" y="262" font-size="30" font-weight="700" fill="#1d1d1f">Shop</text>
+    <rect x="980" y="236" width="380" height="36" rx="18" fill="#efeff4"/>
+    <circle cx="1004" cy="254" r="8" fill="none" stroke="#86868b" stroke-width="2.5"/>
+    <line x1="1010" y1="260" x2="1016" y2="266" stroke="#86868b" stroke-width="2.5" stroke-linecap="round"/>
+    <text x="1028" y="260" font-size="16" fill="#86868b">Search products</text>
+
+    <!-- hero -->
+    <rect x="236" y="306" width="1128" height="300" rx="24" fill="url(#hero)"/>
+    <text x="286" y="396" font-size="22" font-weight="600" fill="#ffffff" opacity="0.85">New</text>
+    <text x="286" y="452" font-size="52" font-weight="700" fill="#ffffff">Find your next device.</text>
+    <text x="286" y="500" font-size="22" fill="#ffffff" opacity="0.9">Browse, compare, and pick up in store.</text>
+    <rect x="286" y="530" width="150" height="46" rx="23" fill="#ffffff"/>
+    <text x="361" y="560" font-size="18" font-weight="600" fill="#5e5ce6" text-anchor="middle">Shop now</text>
+    <!-- devices on hero -->
+    <rect x="1010" y="338" width="150" height="236" rx="22" fill="url(#dev)"/>
+    <rect x="1018" y="346" width="134" height="220" rx="16" fill="#ffffff" opacity="0.18"/>
+    <rect x="1180" y="370" width="132" height="204" rx="20" fill="url(#dev)"/>
+    <rect x="1187" y="377" width="118" height="190" rx="14" fill="#ffffff" opacity="0.18"/>
+
+    <!-- section title -->
+    <text x="236" y="664" font-size="26" font-weight="700" fill="#1d1d1f">Featured</text>
+    <text x="1364" y="664" font-size="18" fill="#0071e3" text-anchor="end">See all</text>
+
+    <!-- product cards -->
+    <g>
+      <rect x="236" y="690" width="264" height="300" rx="20" fill="#f5f5f7"/>
+      <rect x="318" y="722" width="100" height="160" rx="16" fill="url(#dev)"/>
+      <rect x="260" y="912" width="150" height="16" rx="8" fill="#1d1d1f"/>
+      <rect x="260" y="940" width="96" height="14" rx="7" fill="#86868b"/>
+
+      <rect x="524" y="690" width="264" height="300" rx="20" fill="#f5f5f7"/>
+      <rect x="578" y="736" width="156" height="120" rx="12" fill="url(#dev)"/>
+      <rect x="566" y="856" width="180" height="10" rx="4" fill="#3a3a3c"/>
+      <rect x="548" y="912" width="170" height="16" rx="8" fill="#1d1d1f"/>
+      <rect x="548" y="940" width="110" height="14" rx="7" fill="#86868b"/>
+
+      <rect x="812" y="690" width="264" height="300" rx="20" fill="#f5f5f7"/>
+      <rect x="878" y="722" width="132" height="164" rx="18" fill="url(#dev)"/>
+      <rect x="836" y="912" width="140" height="16" rx="8" fill="#1d1d1f"/>
+      <rect x="836" y="940" width="90" height="14" rx="7" fill="#86868b"/>
+
+      <rect x="1100" y="690" width="264" height="300" rx="20" fill="#f5f5f7"/>
+      <rect x="1188" y="740" width="88" height="88" rx="26" fill="url(#dev)"/>
+      <rect x="1198" y="828" width="68" height="40" rx="10" fill="#3a3a3c"/>
+      <rect x="1124" y="912" width="160" height="16" rx="8" fill="#1d1d1f"/>
+      <rect x="1124" y="940" width="100" height="14" rx="7" fill="#86868b"/>
+    </g>
+  </g>
+
+  <text x="800" y="1140" font-size="20" fill="#86868b" text-anchor="middle">Illustration</text>
+</svg>

@@ -16,7 +16,10 @@ export function Media({ src, alt, label, accent, locked, className = "" }: Props
   const [failed, setFailed] = useState(false);
   const showImage = src && !failed && !locked;
   return (
-    <div className={`media ${className}`} style={{ "--job": accent } as React.CSSProperties}>
+    <div
+      className={`media ${showImage ? "media--image" : ""} ${className}`}
+      style={{ "--job": accent } as React.CSSProperties}
+    >
       {showImage ? (
         <img src={src} alt={alt} loading="lazy" onError={() => setFailed(true)} />
       ) : locked ? (

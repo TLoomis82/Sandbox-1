@@ -1,5 +1,6 @@
 import type { Job, Profile } from "../data/types";
 import { formatRange } from "../lib/dates";
+import { PromotedIcon } from "./icons";
 
 type Props = {
   profile: Profile;
@@ -12,9 +13,12 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
     <main className="resume">
       <article className="resume__page">
         <header className="resume__header">
-          <div>
-            <h1>{profile.name}</h1>
-            <p className="resume__headline">{profile.headline}</p>
+          <div className="resume__identity">
+            <img className="resume__photo" src="/profile.jpg" alt={profile.name} />
+            <div>
+              <h1>{profile.name}</h1>
+              <p className="resume__headline">{profile.headline}</p>
+            </div>
           </div>
           <div className="resume__contact">
             <span>{profile.location}</span>
@@ -52,7 +56,12 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
                 <h3>
                   <span className="resume__dot" style={{ background: job.color }} />
                   {job.company}
-                  {job.location.city && <span className="resume__city">{job.location.city}</span>}
+                  {job.location.city && (
+                    <span className="resume__city">
+                      {job.location.city}
+                      {job.location.remote && " · Remote"}
+                    </span>
+                  )}
                 </h3>
                 <button className="btn btn--plain btn--small no-print" onClick={() => onShowOnMap(job.id)}>
                   {job.location.lng != null || job.location.address ? "View on map" : "View details"}
@@ -61,7 +70,14 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
               {job.positions.map((p) => (
                 <div key={p.id} className="resume__position">
                   <div className="resume__position-head">
-                    <strong>{p.title}</strong>
+                    <strong>
+                      {p.title}
+                      {p.promotion && (
+                        <span className="resume__promoted">
+                          <PromotedIcon size={10} /> Promoted
+                        </span>
+                      )}
+                    </strong>
                     <span className="muted">{formatRange(p)}</span>
                   </div>
                   {p.summary && <p className="resume__role-summary">{p.summary}</p>}

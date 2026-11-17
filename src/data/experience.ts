@@ -24,17 +24,50 @@ export const profile: Profile = {
   email: "tybo82@gmail.com",
   linkedin: "https://www.linkedin.com/in/tyler-grant-loomis-msim-6648581b/",
   summary:
-    "Product leader with 20 years across engineering, UX, and data, from the Apple Online Store in Cupertino to enterprise data platforms today. I started as an engineer, grew into UX and product leadership, and now run data products that bring operational, IoT, and third-party data together for executive decisions. I prototype in code, often with AI tools, so ideas get tested with real users and real data before they are built at scale.",
+    "Product leader with 20 years across engineering, UX, and data, from the Apple Online Store in Cupertino to enterprise data platforms today. I started as an engineer, grew into UX and product leadership, and now lead a data team that turns operational, IoT, and third-party data into products and decisions. I prototype in code, often with AI tools, so ideas get tested with real users and real data before they are built at scale.",
   stats: [
     { value: "20", label: "years building products" },
-    { value: "300%", label: "usage lift from a UX redesign" },
-    { value: "200%", label: "mobile growth from a mobile-first strategy" },
-    { value: "90%", label: "adoption of a redesigned back office" },
+    { value: "5", label: "data sources unified in one prototype" },
+    { value: "300%", label: "usage lift from a data-driven redesign" },
+    { value: "90%", label: "adoption after research with 60 users" },
+  ],
+  // Only things actually done: kept to what a recruiter could ask about in an interview.
+  dataWins: [
+    {
+      title: "A hackathon prototype that started a data team",
+      detail:
+        "Connected Salesforce, Intercom, product usage, Datadog, and our own data in a working prototype on real data. The company formed an official data team and asked me to lead it.",
+    },
+    {
+      title: "A designer who became a data product manager",
+      detail:
+        "Most data products are built for the people who build them. I design them for the people who use them, which is how a data-driven redesign lifted usage 300%.",
+    },
+    {
+      title: "I ask users which data matters before building",
+      detail:
+        "Interviews with 60 users showed which numbers they actually needed. The simpler back office built around them reached 90% adoption.",
+    },
+    {
+      title: "Working software in the room, not slides",
+      detail:
+        "I build coded prototypes on real data, so executives react to the actual product: portfolio views, 3D property maps, and live device data.",
+    },
+    {
+      title: "Outside data that answers bigger questions",
+      detail:
+        "Brought third-party market, parcel, and ownership data in next to first-party data to show where a customer's footprint is and where the whitespace is.",
+    },
+    {
+      title: "Data that points to revenue",
+      detail:
+        "Built the first customer 360 strategy to spot churn and upsell opportunities early, using event analytics from both the app and the server.",
+    },
   ],
   skills: [
     {
       group: "Data & AI",
-      items: ["Databricks lakehouse", "Medallion data modeling", "SQL", "Predictive analytics", "Claude", "ChatGPT", "Gemini"],
+      items: ["Data product strategy", "Data prototyping", "Databricks", "SQL", "Third-party data", "Predictive analytics", "Claude", "ChatGPT", "Gemini"],
     },
     {
       group: "Product",
@@ -72,9 +105,11 @@ export const jobs: Job[] = [
     url: "https://smartrent.com",
     location: {
       // Remote role, pinned at company HQ.
-      building: "SmartRent HQ",
-      city: "Scottsdale, AZ",
-      address: "18835 N Thompson Peak Pkwy, Scottsdale, AZ 85255",
+      building: "SmartRent HQ, Fourth Floor",
+      city: "Phoenix, AZ",
+      address: "6811 E Mayo Blvd, Phoenix, AZ 85054",
+      floor: 4,
+      remote: true,
     },
     positions: [
       {
@@ -82,18 +117,20 @@ export const jobs: Job[] = [
         title: "Senior Data Product Manager",
         start: "2026-04",
         end: null,
+        promotion:
+          "At a company hackathon, I built a working prototype that joined Salesforce, Intercom, product usage, Datadog, and SmartRent's own data, using real data, to show what the business could see once its sources were connected. SmartRent formed an official data team from that work and asked me to lead it.",
         summary:
-          "Own data products that unify operational, IoT, and third-party data into one trusted view for enterprise property owners and their executives.",
+          "Lead the data team formed from my hackathon prototype, turning operational, IoT, and third-party data into products and stories for enterprise property owners and their executives.",
         highlights: [
-          "Lead an executive portfolio intelligence product that rolls up health, risk, and opportunity, with drill-down from portfolio to building to unit to the next action.",
-          "Defined the move from fragmented product and warehouse data to a governed lakehouse with bronze, silver, and gold layers, so every metric has one source of truth.",
-          "Solved cross-product property identity where no shared key existed, so one property reads as one property across product lines.",
-          "Brought third-party market and parcel data in next to first-party data to show footprint, whitespace, and peer benchmarks.",
-          "Mapped leading operational signals to the financial outcomes owners report, tying product metrics to NOI.",
-          "Built natural-language analytics experiences that let executives ask questions of governed data in plain English.",
+          "Prototyped an executive portfolio view that rolls up health, risk, and opportunity, with drill-down from portfolio to building to unit.",
+          "Built a 3D property map that layers real device data onto real buildings.",
+          "Brought third-party market, parcel, and ownership data in next to first-party data to show footprint, whitespace, and peer benchmarks.",
+          "Studied how public REITs report performance, to frame product metrics in the leading and lagging indicators owners already track.",
+          "Built a natural-language analytics demo so executives could ask questions of company data in plain English.",
+          "Created executive and board-level demos and presentations that turn product data into a clear story.",
           "Prototype in code with AI tools, so executives and customers react to working software instead of slides.",
         ],
-        skills: ["Databricks", "SQL", "Data modeling", "Mapbox", "React", "Claude"],
+        skills: ["Databricks", "SQL", "Mapbox", "React", "Claude"],
         portfolio: [
           {
             id: "sr-portfolio-intel",
@@ -106,23 +143,15 @@ export const jobs: Job[] = [
           {
             id: "sr-digital-twin",
             title: "3D Property Digital Twin",
-            description: "Interactive 3D map of a property with live device telemetry layered onto real buildings.",
+            description: "Interactive 3D map of a property with real device data layered onto real buildings.",
             tags: ["3D", "IoT", "Prototype"],
             confidential: true,
           },
           {
-            id: "sr-lakehouse",
-            title: "Lakehouse Data Model",
-            description:
-              "Medallion data model that turns raw product and device data into governed, executive-ready metrics.",
-            tags: ["Databricks", "Data modeling"],
-            confidential: true,
-          },
-          {
             id: "sr-nl-analytics",
-            title: "Natural-Language Analytics",
-            description: "Plain-English questions answered from governed data, built for executive workshops.",
-            tags: ["AI", "Analytics"],
+            title: "Natural-Language Analytics Demo",
+            description: "Plain-English questions answered from company data, built for an executive workshop.",
+            tags: ["AI", "Analytics", "Demo"],
             confidential: true,
           },
           {
@@ -154,10 +183,31 @@ export const jobs: Job[] = [
         portfolio: [
           {
             id: "sr-dashboard",
-            title: "Operations Dashboard",
-            description: "Dashboard design for the core property operations platform.",
+            title: "Property Dashboard",
+            description: "Property manager dashboard for device health, work orders, leak activity, and unit status.",
             image: "/portfolio/smartrent-dashboard.jpg",
-            tags: ["Dashboard", "Design system"],
+            tags: ["Dashboard", "IoT", "Design system"],
+          },
+          {
+            id: "sr-shop",
+            title: "Device Shop",
+            description: "In-app storefront for locks, thermostats, hubs, and sensors, with quotes for new properties.",
+            image: "/portfolio/smartrent-shop.jpg",
+            tags: ["E-commerce", "Web"],
+          },
+          {
+            id: "sr-access-code",
+            title: "Self-Guided Tour: Entry",
+            description: "Step 1 of a self-guided tour: a temporary front-entry code with clear lock instructions.",
+            image: "/portfolio/smartrent-access-code.jpg",
+            tags: ["Mobile", "Self-guided tours"],
+          },
+          {
+            id: "sr-amenities",
+            title: "Self-Guided Tour: Amenities",
+            description: "Step 4 of a self-guided tour: the amenities a prospect can unlock, each with its own access code.",
+            image: "/portfolio/smartrent-amenities.jpg",
+            tags: ["Mobile", "Self-guided tours"],
           },
         ],
       },
@@ -172,6 +222,7 @@ export const jobs: Job[] = [
       building: "Elm Street Technology",
       city: "Frisco, TX",
       address: "10601 Clarence Dr, Frisco, TX 75034",
+      remote: true,
     },
     positions: [
       {
@@ -195,10 +246,45 @@ export const jobs: Job[] = [
         portfolio: [
           {
             id: "elm-crm",
-            title: "CRM Redesign",
-            description: "Before and after redesign of the agent CRM dashboard.",
+            title: "Agent CRM Redesign",
+            description:
+              "Dashboard, MLS search, and listing detail rebuilt around an agent's day instead of a database's tables.",
             image: "/portfolio/elm-crm-redesign.jpg",
-            tags: ["CRM", "Redesign"],
+            // Pairs from the redesign deck: odd PDF pages are befores, even pages afters.
+            gallery: [
+              "/portfolio/elm-crm-dashboard-before.jpg",
+              "/portfolio/elm-crm-redesign.jpg",
+              "/portfolio/elm-crm-listings-before.jpg",
+              "/portfolio/elm-crm-listings-after.jpg",
+              "/portfolio/elm-crm-property-before.jpg",
+              "/portfolio/elm-crm-property-after.jpg",
+            ],
+            captions: [
+              "Dashboard: before",
+              "Dashboard: after",
+              "MLS search: before",
+              "MLS search: after",
+              "Listing detail: before",
+              "Listing detail: after",
+            ],
+            caseStudy: {
+              problem:
+                "The agent CRM had grown one screen at a time. A tall sidebar of nested links and brokerage menus sat on every page. The dashboard opened on a row of tiles that each led somewhere else instead of answering anything, MLS search was a spreadsheet of columns beside a long form of filters, and opening a listing took agents away from the results they were working through. Agents had to dig for the data they needed, and the data they cared about most often wasn't shown at all.",
+              approach: [
+                "Watched how agents actually used each screen with UserIQ and Google Analytics 4: what they opened, what they skipped, and where they gave up.",
+                "Interviewed targeted groups of agents to test each redesign idea before it was built.",
+                "Studied competing CRMs and consumer real estate apps to set the bar for search and listing views.",
+              ],
+              solution: [
+                "Dashboard: opens on the agent's day, with new leads, current clients, today's tasks, and progress toward their GCI goal up top, then the lead list, calendar, client activity, tasks, and performance below.",
+                "MLS search: photo-first results with price, address, status, and property-type tags; location, price, type, beds, and baths in a single filter bar; saved searches one click away; and a list or map view.",
+                "Listing detail: opens beside the results instead of replacing them, with photos, key facts, features, map, history, neighborhood, schools, private notes, and actions like creating a CMA, plus previous and next to keep moving through the list.",
+                "Navigation: the sidebar became a slim icon rail, giving the work the full width of the screen.",
+              ],
+              outcome:
+                "The redesign increased usage by over 300%, and a mobile-first strategy alongside it grew mobile usage by 200%.",
+            },
+            tags: ["User research", "CRM", "Redesign"],
           },
         ],
       },
@@ -236,9 +322,12 @@ export const jobs: Job[] = [
     monogram: "C",
     color: "#BF5AF2",
     location: {
-      // TODO: add a city or address to put this on the map.
-      building: "Stealth startup",
-      city: "",
+      // No office address; pinned at the city center.
+      building: "Commissions.io",
+      city: "Prosper, TX",
+      remote: true,
+      lng: -96.8011,
+      lat: 33.2362,
     },
     positions: [
       {
@@ -257,21 +346,21 @@ export const jobs: Job[] = [
           {
             id: "commissions-wireframes",
             title: "Wireframes",
-            description: "Low-fidelity Balsamiq wireframes for the distributor experience.",
+            description: "Low-fidelity Balsamiq wireframe of the distributor home and content sharing.",
             image: "/portfolio/commissions-balsamiq.jpg",
             tags: ["Balsamiq", "Wireframes"],
           },
           {
             id: "commissions-sketch",
             title: "Sketch Mockups",
-            description: "Mid-fidelity mockups exploring the mobile app structure.",
+            description: "Mid-fidelity mobile mockups for a mood and food tracker.",
             image: "/portfolio/commissions-sketch.jpg",
             tags: ["Sketch", "Mobile"],
           },
           {
             id: "commissions-hifi",
             title: "High-Fidelity Designs",
-            description: "Final visual design for bonus tracking and distributor progress.",
+            description: "Final mobile design for distributor goals, bonus progress, and performance.",
             image: "/portfolio/commissions-hifi.jpg",
             tags: ["Visual design", "Mobile"],
           },
@@ -345,8 +434,10 @@ export const jobs: Job[] = [
       {
         id: "neolife-ux",
         title: "Director of UX",
-        start: "2014-09",
+        start: "2014-11",
         end: "2016-10",
+        promotion:
+          "Joined to lead the existing mobile app projects. Talking with customers again and again showed me where the experience was letting them down, so I started designing new ones. Two months in, that work became its own role as Director of UX.",
         summary: "Led web and mobile UX for a global health and wellness brand.",
         metrics: [
           { value: "90%", label: "adoption of the redesigned back office" },
@@ -357,32 +448,83 @@ export const jobs: Job[] = [
           "Redesigned the back office website, improving purchasing and fulfillment, with 90% adoption.",
           "Moved the platform from ASP to Node.js, speeding up delivery of new features.",
           "Presented roadmaps to executives and launched product demos at industry events.",
-          "Promoted from International Technical Product Manager for Mobile Apps in under a year.",
         ],
         skills: ["iOS", "Android", "Mixpanel", "Node.js"],
         portfolio: [
           {
             id: "neolife-club-app",
             title: "NeoLife Club App",
-            description: "Consumer mobile app for the NeoLife member community.",
+            description: "Consumer iOS app for product highlights, shopping, and a 30-day fitness challenge.",
             image: "/portfolio/neolife-club-app.jpg",
             tags: ["iOS", "Android"],
           },
           {
             id: "neolife-back-office",
-            title: "Back Office Redesign",
-            description: "Mobile back office for purchasing and fulfillment, adopted by 90% of users.",
+            title: "Shop Redesign",
+            description: "Redesigned distributor shop: product pages, category browsing, and the logged-in home.",
             image: "/portfolio/neolife-back-office.jpg",
+            // Pages 2–5 of the redesign deck; opens on page 3 (the cover).
+            gallery: [
+              "/portfolio/neolife-shop-p2.jpg",
+              "/portfolio/neolife-back-office.jpg",
+              "/portfolio/neolife-shop-p4.jpg",
+              "/portfolio/neolife-shop-p5.jpg",
+            ],
             tags: ["Redesign", "E-commerce"],
           },
           {
             id: "neolife-before-after",
-            title: "Site Redesign",
-            description: "Before and after redesign of the e-commerce site.",
+            title: "Back Office Redesign",
+            description:
+              "Research with 60 distributors turned a cluttered portal into a clean back office built around what they actually use.",
             image: "/portfolio/neolife-before-after.jpg",
-            tags: ["Web", "E-commerce"],
+            gallery: [
+              "/portfolio/neolife-before-after.jpg",
+              "/portfolio/neolife-product-before-after.jpg",
+              "/portfolio/neolife-home-before.jpg",
+              "/portfolio/neolife-home-after.jpg",
+              "/portfolio/neolife-product-before.jpg",
+              "/portfolio/neolife-product-after.jpg",
+            ],
+            captions: [
+              "Home: before and after",
+              "Product page: before and after",
+              "Home: before",
+              "Home: after",
+              "Product page: before",
+              "Product page: after",
+            ],
+            caseStudy: {
+              problem:
+                "The distributor back office had grown into a portal of banners, promotions, news, tools, and dozens of links, all competing for the same attention. Distributors logged in to check one thing, like how close they were to their next bonus, and had to hunt for it. Product pages had the same problem: dense copy, PDF links, and a pricing table stood between a distributor and the order.",
+              approach: [
+                "Interviewed a sample of 60 distributors about what they look for when they log in, what they act on, and what they ignore.",
+                "Ranked every element on the home and product pages by how often distributors used it and how much it mattered to their business.",
+                "Kept what made the list on the page and moved everything else into clear menus, so nothing was lost, just out of the way.",
+              ],
+              solution: [
+                "Home: a personal overview with the five numbers distributors check most (PPV, BV, QPV, GPV, and legs), plus goal tracking that shows progress to the next bonus at a glance.",
+                "Navigation: seven plain sections replace the crowded link bar and sidebar of buttons.",
+                "Product pages: one hero image with price and options up front, visual highlights in place of walls of text, and Fast Facts, Ingredients, and the science one tap away.",
+              ],
+              outcome:
+                "90% of distributors adopted the redesigned back office, and purchasing and fulfillment became noticeably faster.",
+            },
+            tags: ["User research", "Redesign", "Information architecture"],
           },
         ],
+      },
+      {
+        id: "neolife-tpm",
+        title: "International Technical Product Manager, Mobile Apps",
+        start: "2014-09",
+        end: "2014-11",
+        summary: "Brought in to lead NeoLife's existing mobile app projects.",
+        highlights: [
+          "Took over the in-flight mobile app projects and kept them on track.",
+          "Talked with customers to learn where the apps and site were falling short, which set up the move into UX leadership.",
+        ],
+        portfolio: [],
       },
     ],
   },
@@ -408,6 +550,15 @@ export const jobs: Job[] = [
         portfolio: [],
       },
     ],
+    press: [
+      {
+        // Headline taken from the article URL; check it against the live page.
+        title: "Zeality injects immersive social VR content into mobile apps",
+        outlet: "SiliconANGLE",
+        date: "2017-03",
+        url: "https://siliconangle.com/2017/03/01/zeality-injects-immersive-social-vr-content-mobile-apps/",
+      },
+    ],
   },
   {
     id: "apple",
@@ -427,14 +578,51 @@ export const jobs: Job[] = [
         title: "Technical Product Manager, Mobile Apps",
         start: "2013-04",
         end: "2014-06",
+        promotion:
+          "Promoted from Mobile UAT Lead for bringing valuable product ideas, deep product knowledge, and clear value to the mobile apps team.",
         summary:
           "Managed concurrent software projects spanning core platform, big data, and visualization on aggressive timelines.",
         highlights: [
+          "Brought the Apple Store app to iPad, giving customers a shopping experience designed for the larger screen.",
+          "Led the first iBeacon experience inside Apple's retail stores: as customers moved between display tables, details for the products on the nearest table appeared on their iPhone. It went live ahead of Major League Baseball's ballpark rollout of the same technology.",
           "Collected requirements, managed risk, and drove change with engineering and business development managers.",
           "Presented functional documentation to site managers.",
           "Owned customer support escalations through to resolution.",
         ],
-        portfolio: [],
+        portfolio: [
+          {
+            id: "apple-ibeacon",
+            title: "iBeacon in Apple Stores",
+            description:
+              "The first iBeacon experience in Apple retail: product details followed customers to whichever display table they were nearest.",
+            image: "/portfolio/apple-ibeacon.svg",
+            caseStudy: {
+              problem:
+                "In a busy store, customers moving from table to table had to find a specialist or search the app to learn about the products in front of them.",
+              approach: [
+                "Led the product effort to bring Apple's new iBeacon technology into its own retail stores for the first time.",
+                "Worked with engineering and retail teams to map beacons to the iPad, iPhone, MacBook, and iMac display tables and decide what each table should show.",
+              ],
+              solution: [
+                "Beacons at each display table let the Apple Store app know which table a customer was closest to: iPad, iPhone, MacBook, or iMac.",
+                "The details for that table's products appeared on the customer's iPhone and updated as they walked to the next one.",
+              ],
+              outcome:
+                "One of the first large-scale retail uses of iBeacon, live ahead of Major League Baseball's ballpark rollout of the same technology.",
+            },
+            tags: ["iBeacon", "Retail", "iOS", "Illustration"],
+          },
+          {
+            id: "apple-store-ipad",
+            title: "Apple Store App for iPad",
+            description:
+              "Introduced the Apple Store app on iPad, with browsing, configuring, and in-store pickup designed for the larger screen. Images: Apple.",
+            image: "/portfolio/apple-store-ipad-product.jpg",
+            gallery: ["/portfolio/apple-store-ipad-product.jpg", "/portfolio/apple-store-ipad-pickup.jpg"],
+            captions: ["Configure and buy", "Personal Pickup: live store availability"],
+            tags: ["iPad", "E-commerce", "Retail"],
+          },
+        ],
       },
       {
         id: "apple-uat",
@@ -463,11 +651,13 @@ export const jobs: Job[] = [
       address: "18850 N 56th St, Phoenix, AZ 85054",
     },
     positions: [
+      // Three roles from LinkedIn; the VisualCV resume merges them into one.
       {
         id: "infosys-amex-lead",
         title: "Project Manager / Lead Business Systems Analyst / Test Manager",
-        start: "2007-01",
+        start: "2010-07",
         end: "2011-10",
+        promotion: true,
         summary: "Built as-is, to-be, and end-to-end workflows to define requirements for prototypes and enhancements.",
         highlights: [
           "Carried business needs through design, development, testing, and release.",
@@ -476,19 +666,38 @@ export const jobs: Job[] = [
         ],
         portfolio: [],
       },
+      {
+        id: "infosys-amex-senior",
+        title: "Senior Systems Engineer / Senior Business Systems Analyst",
+        start: "2008-04",
+        end: "2010-07",
+        promotion: true,
+        highlights: [],
+        portfolio: [],
+      },
+      {
+        id: "infosys-amex-se",
+        title: "Software Engineer / Business Systems Analyst",
+        start: "2007-01",
+        end: "2008-04",
+        highlights: [],
+        portfolio: [],
+      },
     ],
   },
   {
     id: "infosys",
     company: "Infosys",
     monogram: "I",
-    color: "#AC8E68",
+    // Infosys blue. Its only public icon is a cropped "Info" wordmark, so the pin keeps the letter.
+    color: "#007CC3",
     location: {
-      // Approximate: Infosys Mysuru campus.
+      // No. 350, Hebbal, Electronics City, Hootagalli, Mysuru 570027. Pinned by hand
+      // on the campus: the geocoder lands several blocks southwest of it.
       building: "Infosys Global Education Centre",
       city: "Mysuru, India",
-      lng: 76.595,
-      lat: 12.355,
+      lng: 76.594419,
+      lat: 12.358908,
     },
     positions: [
       {

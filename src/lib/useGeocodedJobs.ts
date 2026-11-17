@@ -23,23 +23,32 @@ function writeCache(cache: Record<string, Coords>) {
 }
 
 async function geocode(address: string): Promise<Coords | null> {
-  const url =
-    "https://api.mapbox.com/search/geocode/v6/forward" +
-    `?q=${encodeURIComponent(address)}&limit=1&types=address&access_token=${TOKEN}`;
-  const res = await fetch(url);
-  if (!res.ok) return null;
-  const data = await res.json();
-  return data.features?.[0]?.geometry?.coordinates ?? null;
+  // Street-level first; if that finds nothing (common outside the US), retry
+  // as a general place search, which still lands on the right neighbourhood.
+  for (const types of ["&types=address", ""]) {
+    const url =
+      "https://api.mapbox.com/search/geocode/v6/forward" +
+      `?q=${encodeURIComponent(address)}&limit=1${types}&access_token=${TOKEN}`;
+    const res = await fetch(url);
+    if (!res.ok) continue;
+    const data = await res.json();
+    const coords = data.features?.[0]?.geometry?.coordinates;
+    if (coords) return coords;
+  }
+  return null;
 }
 
-/** Fills in lng/lat for jobs that only have a street address. */
+/**
+ * Places jobs that have a street address at its geocoded position. Any lng/lat
+ * given alongside the address is a fallback, used until (or if) geocoding fails.
+ */
 export function useGeocodedJobs(jobs: Job[]): Job[] {
   const [cache, setCache] = useState<Record<string, Coords>>(readCache);
 
   useEffect(() => {
     if (!TOKEN) return;
     const missing = jobs
-      .filter((j) => j.location.lng == null && j.location.address && !cache[j.location.address])
+      .filter((j) => j.location.address && !cache[j.location.address])
       .map((j) => j.location.address!);
     const unique = [...new Set(missing)];
     if (!unique.length) return;
@@ -65,7 +74,6 @@ export function useGeocodedJobs(jobs: Job[]): Job[] {
     () =>
       jobs.map((job) => {
         const { location } = job;
-        if (location.lng != null && location.lat != null) return job;
         const coords = location.address ? cache[location.address] : undefined;
         return coords ? { ...job, location: { ...location, lng: coords[0], lat: coords[1] } } : job;
       }),

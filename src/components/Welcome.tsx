@@ -11,7 +11,8 @@ type Stage = "enter" | "exit" | "done";
 export function shouldShowWelcome(): boolean {
   // `?welcome` replays it, handy for testing or demoing.
   if (new URLSearchParams(location.search).has("welcome")) return true;
-  if (location.hash === "#resume") return false;
+  // Deep links straight to the resume or services skip it.
+  if (location.hash === "#resume" || location.hash === "#services") return false;
   try {
     return localStorage.getItem(SEEN_KEY) !== "1";
   } catch {
