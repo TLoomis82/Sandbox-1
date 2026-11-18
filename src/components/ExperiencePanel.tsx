@@ -20,35 +20,23 @@ const SNAPS: Snap[] = ["peek", "half", "full"];
 const isPhone = () => window.innerWidth <= 900;
 function snapPx(s: Snap) {
   const h = window.innerHeight;
-  return s === "peek" ? Math.round(h * 0.34) : s === "half" ? Math.round(h * 0.62) : h - 64;
+  return s === "peek" ? Math.round(h * 0.42) : s === "half" ? Math.round(h * 0.62) : h - 64;
 }
-/** The sheet's height, shared with the tour bar so it can ride just above it. */
-function publishSheet(px: number | null) {
-  const root = document.documentElement.style;
-  if (px === null) root.removeProperty("--sheet-h");
-  else root.setProperty("--sheet-h", `${px}px`);
-}
+/** Phones open short so the map stays in view; desktop's side panel ignores this. */
+const openSnap = (): Snap => (isPhone() ? "peek" : "half");
 
 export function ExperiencePanel({ job, siblings, email, onSelect, onClose, onOpenItem }: Props) {
   // Keep the last job rendered while the panel animates out.
   const [shown, setShown] = useState<Job | null>(job);
   const panel = useRef<HTMLElement>(null);
-  const [snap, setSnap] = useState<Snap>("half");
+  const [snap, setSnap] = useState<Snap>(openSnap);
 
   useEffect(() => {
     if (job) setShown(job);
   }, [job]);
 
-  // Each new company opens at half height.
-  useEffect(() => setSnap("half"), [job?.id]);
-
-  useEffect(() => {
-    const apply = () => publishSheet(job && isPhone() ? snapPx(snap) : null);
-    apply();
-    window.addEventListener("resize", apply);
-    return () => window.removeEventListener("resize", apply);
-  }, [snap, job]);
-  useEffect(() => () => publishSheet(null), []);
+  // Each new company opens at the starting height.
+  useEffect(() => setSnap(openSnap()), [job?.id]);
 
   // Phone bottom sheet: swipe up for more, down to see more map, down again to close.
   useEffect(() => {
@@ -88,7 +76,6 @@ export function ExperiencePanel({ job, siblings, email, onSelect, onClose, onOpe
       e.preventDefault();
       lastH = Math.max(80, Math.min(snapPx("full"), start - dy));
       el.style.height = `${lastH}px`;
-      publishSheet(lastH);
     };
     const onEnd = (e: TouchEvent) => {
       if (mode !== "sheet") return;
@@ -112,7 +99,6 @@ export function ExperiencePanel({ job, siblings, email, onSelect, onClose, onOpe
         target = SNAPS.reduce((a, b) => (Math.abs(snapPx(b) - lastH) < Math.abs(snapPx(a) - lastH) ? b : a));
       }
       setSnap(target);
-      publishSheet(snapPx(target));
     };
 
     el.addEventListener("touchstart", onStart, { passive: true });

@@ -1,12 +1,25 @@
 import type { Profile } from "../data/types";
 
-export type View = "map" | "resume" | "services";
+export type View = "map" | "resume" | "services" | "side";
 
 const TABS: { view: View; label: string }[] = [
   { view: "map", label: "Map" },
   { view: "resume", label: "Resume" },
   { view: "services", label: "Services" },
+  { view: "side", label: "Side Projects" },
 ];
+
+/** "Side Projects" drops its second word on narrow phones. */
+function TabLabel({ label }: { label: string }) {
+  const [first, ...rest] = label.split(" ");
+  if (!rest.length) return <>{label}</>;
+  return (
+    <>
+      {first}
+      <span className="tab-long"> {rest.join(" ")}</span>
+    </>
+  );
+}
 
 type Props = {
   profile: Profile;
@@ -33,7 +46,7 @@ export function TopBar({ profile, view, onViewChange, onHome }: Props) {
         <span className="segmented__thumb" style={{ transform: `translateX(${index * 100}%)` }} />
         {TABS.map((t) => (
           <button key={t.view} role="tab" aria-selected={view === t.view} onClick={() => onViewChange(t.view)}>
-            {t.label}
+            <TabLabel label={t.label} />
           </button>
         ))}
       </div>

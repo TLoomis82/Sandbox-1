@@ -15,9 +15,11 @@ import { Lightbox } from "./components/Lightbox";
 import { ResumeView } from "./components/ResumeView";
 import { Welcome, shouldShowWelcome } from "./components/Welcome";
 import { ServicesView } from "./components/ServicesView";
+import { SideProjectsView } from "./components/SideProjectsView";
+import { StoryMaker } from "./components/StoryMaker";
 
 /** Views reachable by URL hash, so recruiters and clients can be sent straight there. */
-const HASH_VIEWS: Record<string, View> = { "#resume": "resume", "#services": "services" };
+const HASH_VIEWS: Record<string, View> = { "#resume": "resume", "#services": "services", "#side": "side", "#story": "side" };
 
 const bounds = yearBounds(rawJobs);
 const allFilters = (): Filters => ({ companies: new Set(), years: bounds });
@@ -52,6 +54,14 @@ export default function App() {
   const [globeView, setGlobeView] = useState(false);
   const exitWelcome = useCallback(() => setWelcome(false), []);
   const endWelcome = useCallback(() => setWelcomeMounted(false), []);
+  // The Story Maker plays full screen over the Side Projects page; #story links straight to it.
+  const [story, setStory] = useState(() => location.hash === "#story");
+  const openStory = useCallback(() => setStory(true), []);
+  const closeStory = useCallback(() => {
+    setStory(false);
+    setView("side");
+    setIntro(false);
+  }, []);
 
   const visible = useMemo(() => applyFilters(jobs, filters), [jobs, filters]);
   const visibleIds = useMemo(() => new Set(visible.map((j) => j.id)), [visible]);
@@ -251,6 +261,9 @@ export default function App() {
           }}
         />
       )}
+
+      {view === "side" && <SideProjectsView onOpenStory={openStory} />}
+      {story && <StoryMaker email={profile.email} onClose={closeStory} />}
 
       <Lightbox item={lightbox?.item ?? null} job={lightbox?.job ?? null} email={profile.email} onClose={closeLightbox} />
     </div>
