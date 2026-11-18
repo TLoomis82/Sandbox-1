@@ -23,6 +23,7 @@ export const profile: Profile = {
   location: "Prosper, TX",
   email: "tybo82@gmail.com",
   linkedin: "https://www.linkedin.com/in/tyler-grant-loomis-msim-6648581b/",
+  website: "https://tylerloomis.com",
   summary:
     "Product leader with 20 years across engineering, UX, and data, from the Apple Online Store in Cupertino to enterprise data platforms today. I started as an engineer, grew into UX and product leadership, and now lead a data team that turns operational, IoT, and third-party data into products and decisions. I prototype in code, often with AI tools, so ideas get tested with real users and real data before they are built at scale.",
   stats: [

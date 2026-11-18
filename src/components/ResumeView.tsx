@@ -23,6 +23,11 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
           <div className="resume__contact">
             <span>{profile.location}</span>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            {profile.website && (
+              <a href={profile.website} target="_blank" rel="noopener">
+                {profile.website.replace(/^https?:\/\//, "")}
+              </a>
+            )}
             {profile.linkedin && (
               <a href={profile.linkedin} target="_blank" rel="noopener">
                 LinkedIn

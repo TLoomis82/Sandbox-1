@@ -82,6 +82,8 @@ export type Profile = {
   location: string;
   email: string;
   linkedin?: string;
+  /** Shown as plain text so it stays readable in the printed PDF. */
+  website?: string;
   summary: string;
   stats: Metric[];
   /** Front-page "What sets me apart": strongest data accomplishments, rotated one at a time. */
