@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Job, PortfolioItem, Position } from "../data/types";
-import { duration, formatMonth, formatRange, jobRangeLabel } from "../lib/dates";
+import { duration, formatMonth, formatRange, jobDuration, jobRangeLabel, showsTenure } from "../lib/dates";
 import { CompanyLogo } from "./CompanyLogo";
 import { ArrowIcon, CloseIcon, PromotedIcon, RemoteIcon } from "./icons";
 import { Media } from "./Media";
@@ -119,7 +119,9 @@ export function ExperiencePanel({ job, siblings, email, onSelect, onClose, onOpe
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  const meta = shown ? [shown.location.city, jobRangeLabel(shown)].filter(Boolean).join(" · ") : "";
+  const meta = shown
+    ? [shown.location.city, jobRangeLabel(shown), showsTenure(shown) && jobDuration(shown)].filter(Boolean).join(" · ")
+    : "";
   const promotions = shown?.positions.filter((p) => p.promotion).length ?? 0;
   const roles = shown?.positions.length ?? 0;
 

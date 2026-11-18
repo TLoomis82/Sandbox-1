@@ -1,5 +1,5 @@
 import type { Job, Profile } from "../data/types";
-import { formatRange } from "../lib/dates";
+import { formatRange, jobDuration, showsTenure } from "../lib/dates";
 import { PromotedIcon } from "./icons";
 
 type Props = {
@@ -68,6 +68,12 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
                     <span className="resume__city">
                       {job.location.city}
                       {job.location.remote && " · Remote"}
+                      {showsTenure(job) && (
+                        <>
+                          {" · "}
+                          <span className="nowrap">{jobDuration(job)}</span>
+                        </>
+                      )}
                     </span>
                   )}
                 </h3>

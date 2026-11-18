@@ -46,7 +46,18 @@ export function jobRangeLabel(job: Job): string {
 
 /** Duration like "2 yrs 4 mos". */
 export function duration(p: Position): string {
-  const total = Math.round((toYears(p.end, true) - toYears(p.start)) * 12);
+  return formatMonths(Math.round((toYears(p.end, true) - toYears(p.start)) * 12));
+}
+
+/** Total time at a company, from the first role's start to the last role's end. */
+export function jobDuration(job: Job): string {
+  return formatMonths(Math.round((jobEnd(job) - jobStart(job)) * 12));
+}
+
+/** Shown beside the company only when there was a promotion, where the role dates alone don't add it up. */
+export const showsTenure = (job: Job) => job.positions.some((p) => p.promotion);
+
+function formatMonths(total: number): string {
   const yrs = Math.floor(total / 12);
   const mos = total % 12;
   const parts = [];

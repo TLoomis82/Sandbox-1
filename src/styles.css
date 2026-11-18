@@ -3380,6 +3380,9 @@ code {
   color: var(--text-2);
   letter-spacing: 0;
 }
+.nowrap {
+  white-space: nowrap;
+}
 .resume__company {
   display: inline-flex;
   align-items: flex-start;
