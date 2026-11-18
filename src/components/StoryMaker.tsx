@@ -24,6 +24,12 @@ type Shot = {
   /** Black and white on entry or exit (the photograph on the dash). */
   grayIn?: boolean;
   grayOut?: boolean;
+  /**
+   * Portrait phones see only about a quarter of the frame's width, so a shot
+   * can re-aim there: frame the subject (position) and zoom about the screen
+   * center (origin) rather than the spot it occupies on a wide screen.
+   */
+  phone?: { position?: number; origin?: [number, number]; shift?: [number, number] };
 };
 
 const SHOTS: Shot[] = [
@@ -45,6 +51,8 @@ const SHOTS: Shot[] = [
     line: "His son, at the window. Waiting.",
     start: 1.04, end: 3, position: [52, 50], origin: [68, 73], shift: [-17, -19], fade: 0.8,
     grayOut: true,
+    // The photo sits about 69% across the image: center it, then push straight in.
+    phone: { position: 75, origin: [50, 72], shift: [0, -19] },
   },
   {
     src: "/side/story/4-room.webp",
@@ -52,6 +60,8 @@ const SHOTS: Shot[] = [
     line: "He still watches the sky for his father. His mother can't bear to.",
     start: 1.05, end: 1.42, position: [66, 50], origin: [73, 54], shift: [-6, 0], fade: 0.73,
     grayIn: true,
+    // Open on the boy, matching the photograph, before the pan finds his mother.
+    phone: { position: 80, origin: [50, 54], shift: [0, 0] },
   },
   {
     src: "/side/story/5-window.webp",
@@ -86,11 +96,13 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 /** On a phone only a slice of the frame fits, so the room pans to find his mother, then back to the boy. */
 function objectX(i: number, u: number, portrait: boolean) {
-  const x = SHOTS[i].position[0];
+  const x = (portrait && SHOTS[i].phone?.position) || SHOTS[i].position[0];
   if (!portrait || i !== ROOM) return x;
-  if (u < 0.24) return lerp(x, 22, ease(u / 0.24));
-  if (u < 0.42) return 22;
-  return lerp(22, 73, ease((u - 0.42) / 0.5));
+  // Hold on the boy while the color comes in, then find his mother, then back to the boy.
+  if (u < 0.3) return x;
+  if (u < 0.48) return lerp(x, 22, ease((u - 0.3) / 0.18));
+  if (u < 0.6) return 22;
+  return lerp(22, 80, ease((u - 0.6) / 0.32));
 }
 
 type Props = { email: string; onClose: () => void };
@@ -117,13 +129,15 @@ function frameAt(pos: number, portrait: boolean, reduce: boolean): Frame {
 
   const still = (i: number, opacity: number) => {
     const s = SHOTS[i];
+    const origin = (portrait && s.phone?.origin) || s.origin;
+    const shift = (portrait && s.phone?.shift) || s.shift;
     const local = reduce ? 0 : clamp(pos - i);
     const zoom = lerp(s.start, s.end, ease(local));
     const gray = s.grayOut ? ease((local - s.fade) / (1 - s.fade)) : s.grayIn ? 1 - ease(local / 0.25) : 0;
     stills.push({
       i,
-      transform: `translate3d(${(s.shift[0] * local).toFixed(3)}vw, ${(s.shift[1] * local).toFixed(3)}vh, 0) scale(${zoom.toFixed(5)})`,
-      origin: `${s.origin[0]}% ${s.origin[1]}%`,
+      transform: `translate3d(${(shift[0] * local).toFixed(3)}vw, ${(shift[1] * local).toFixed(3)}vh, 0) scale(${zoom.toFixed(5)})`,
+      origin: `${origin[0]}% ${origin[1]}%`,
       position: `${objectX(i, local, portrait).toFixed(2)}% ${s.position[1]}%`,
       opacity,
       filter: filters(gray),

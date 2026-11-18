@@ -3065,6 +3065,19 @@ code {
   -webkit-backdrop-filter: blur(10px);
   animation: fade 0.3s ease;
 }
+.lightbox__close {
+  position: fixed;
+  z-index: 3;
+  top: max(14px, env(safe-area-inset-top));
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
 /* Desktop: the design scrolls in its own column at full width; details sit beside it. */
 .lightbox__card {
   width: min(1240px, 100%);
@@ -3848,9 +3861,9 @@ code {
   .lightbox__media.media--image {
     overflow: visible;
   }
-  /* The image can be very tall here, so pin the arrows near the top. */
+  /* The image can be very tall here, so pin the arrows near the top, below the close button. */
   .lightbox__nav {
-    top: 12px;
+    top: 62px;
     margin-top: 0;
     width: 38px;
     height: 38px;

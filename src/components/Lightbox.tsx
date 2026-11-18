@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Job, PortfolioItem } from "../data/types";
-import { ArrowIcon } from "./icons";
+import { ArrowIcon, CloseIcon } from "./icons";
 import { Media } from "./Media";
 
 type Props = {
@@ -49,6 +49,10 @@ export function Lightbox({ item, job, email, onClose }: Props) {
 
   return (
     <div className="lightbox" onClick={onClose} role="dialog" aria-modal aria-label={item.title}>
+      {/* Pinned to the screen corner: on phones the card fills the screen and its Close button sits below a tall image. */}
+      <button className="icon-btn lightbox__close" onClick={onClose} aria-label="Close">
+        <CloseIcon size={18} />
+      </button>
       <div className="lightbox__card" onClick={(e) => e.stopPropagation()}>
         <div className="lightbox__stage">
           {/* Keyed by image so each one opens scrolled to the top. */}
