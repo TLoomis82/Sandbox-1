@@ -3380,11 +3380,18 @@ code {
   color: var(--text-2);
   letter-spacing: 0;
 }
+.resume__company {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+/* Centered on the first line of the name, so a wrapped name reads like a bulleted line. */
 .resume__dot {
   width: 10px;
   height: 10px;
+  margin-top: calc(0.6lh - 5px);
   border-radius: 50%;
-  align-self: center;
+  flex-shrink: 0;
 }
 .resume__position {
   margin: 14px 0 0 20px;

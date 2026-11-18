@@ -59,8 +59,11 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
             <div key={job.id} className="resume__job">
               <div className="resume__job-head">
                 <h3>
-                  <span className="resume__dot" style={{ background: job.color }} />
-                  {job.company}
+                  {/* Dot and name stay on one line; only the city wraps below on narrow screens. */}
+                  <span className="resume__company">
+                    <span className="resume__dot" style={{ background: job.color }} />
+                    {job.company}
+                  </span>
                   {job.location.city && (
                     <span className="resume__city">
                       {job.location.city}
