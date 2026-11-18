@@ -51,12 +51,12 @@ export const profile: Profile = {
     {
       title: "Working software in the room, not slides",
       detail:
-        "I build coded prototypes on real data, so executives react to the actual product: portfolio views, 3D property maps, and live device data.",
+        "I build coded prototypes on real data, so executives react to the actual product, not a mockup.",
     },
     {
       title: "Outside data that answers bigger questions",
       detail:
-        "Brought third-party market, parcel, and ownership data in next to first-party data to show where a customer's footprint is and where the whitespace is.",
+        "Brought third-party data in next to first-party data to answer questions neither could answer alone.",
     },
     {
       title: "Data that points to revenue",
@@ -122,29 +122,32 @@ export const jobs: Job[] = [
         summary:
           "Lead the data team formed from my hackathon prototype, turning operational, IoT, and third-party data into products and stories for enterprise property owners and their executives.",
         highlights: [
-          "Prototyped an executive portfolio view that rolls up health, risk, and opportunity, with drill-down from portfolio to building to unit.",
-          "Built a 3D property map that layers real device data onto real buildings.",
-          "Brought third-party market, parcel, and ownership data in next to first-party data to show footprint, whitespace, and peer benchmarks.",
+          "Prototyped executive data experiences that connect high-level trends to the detail behind them.",
+          "Built spatial prototypes that put operational data in a physical context.",
+          "Connected internal and third-party data APIs into a single prototype experience, so questions that spanned several systems could be answered in one place.",
+          "Validated every insight in an executive demo against live production data before it was shown.",
+          "Audited product counts across systems against live data and corrected the figures before they reached leadership.",
+          "Evaluated third-party data vendors on coverage, licensing, and cost.",
+          "Turned CEO-level requirements into a prototype roadmap.",
           "Studied how public REITs report performance, to frame product metrics in the leading and lagging indicators owners already track.",
           "Built a natural-language analytics demo so executives could ask questions of company data in plain English.",
-          "Created executive and board-level demos and presentations that turn product data into a clear story.",
+          "Created executive demos and presentations that turn product data into a clear story.",
           "Prototype in code with AI tools, so executives and customers react to working software instead of slides.",
         ],
         skills: ["Databricks", "SQL", "Mapbox", "React", "Claude"],
         portfolio: [
           {
             id: "sr-portfolio-intel",
-            title: "Portfolio Intelligence Platform",
-            description:
-              "Executive view of portfolio health with drill-down to the building, the unit, and the next action.",
+            title: "Executive Data Experience",
+            description: "Executive views that connect high-level trends to the detail behind them.",
             tags: ["Data product", "Executive UX", "Mapbox"],
             confidential: true,
           },
           {
             id: "sr-digital-twin",
-            title: "3D Property Digital Twin",
-            description: "Interactive 3D map of a property with real device data layered onto real buildings.",
-            tags: ["3D", "IoT", "Prototype"],
+            title: "Spatial Data Prototype",
+            description: "Operational data shown in a physical context.",
+            tags: ["Spatial", "Prototype"],
             confidential: true,
           },
           {
@@ -156,8 +159,8 @@ export const jobs: Job[] = [
           },
           {
             id: "sr-immersive",
-            title: "Immersive Briefing Experience",
-            description: "Data storytelling built for a 180° wall display in an executive briefing center.",
+            title: "Large-Format Data Storytelling",
+            description: "Data storytelling built for in-person executive sessions.",
             tags: ["Immersive", "Storytelling"],
             confidential: true,
           },

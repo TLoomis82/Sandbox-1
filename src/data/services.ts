@@ -51,9 +51,9 @@ export const services: Service[] = [
     id: "experiences",
     icon: "experience",
     title: "Memorable data experiences",
-    pitch: "Dashboards people actually open. Executive views, live maps, and 3D property views that turn numbers into a story.",
+    pitch: "Dashboards people actually open. Executive views, live maps, and spatial views that turn numbers into a story.",
     deliverables: ["Executive dashboards with drill-down", "Map and 3D visualizations", "Data storytelling for big screens"],
-    proof: "Executive portfolio views with drill-down from portfolio to building to unit, and 3D property maps with real device data.",
+    proof: "Executive data experiences and spatial prototypes built on real operational data.",
   },
   {
     id: "apis",
@@ -61,7 +61,7 @@ export const services: Service[] = [
     title: "Connect your tools and APIs",
     pitch: "Your CRM, support desk, product analytics, and monitoring all know something different. I connect them and surface only what your users need.",
     deliverables: ["Integrations across your SaaS stack", "Third-party data enrichment", "The few numbers that matter, front and center"],
-    proof: "Unified Salesforce, Intercom, product usage, Datadog, and first-party data, plus third-party market and parcel data.",
+    proof: "Connected Salesforce, Intercom, product usage, Datadog, and first-party data in one prototype, plus third-party data.",
   },
   {
     id: "research",

@@ -119,8 +119,8 @@ export function Lightbox({ item, job, email, onClose }: Props) {
 
           {item.confidential && (
             <p className="muted">
-              This project is under NDA, so I can't publish screens here. I'm happy to walk through the problem, my
-              approach, and the outcome live.
+              This project is confidential, so I can't publish screens here. I'm happy to talk through my approach and
+              what I learned.
             </p>
           )}
           {item.tags && (

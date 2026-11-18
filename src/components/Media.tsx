@@ -25,7 +25,7 @@ export function Media({ src, alt, label, accent, locked, className = "" }: Props
       ) : locked ? (
         <div className="media__locked">
           <LockIcon />
-          <span>Under NDA</span>
+          <span>Confidential</span>
         </div>
       ) : (
         <span className="media__label">{label}</span>

@@ -290,8 +290,8 @@ function Role({
           <h4 className="eyebrow">Selected work</h4>
           {hasNda && (
             <p className="nda-note">
-              Some of this work is under NDA, so details are generalized.{" "}
-              <a href={`mailto:${email}?subject=Portfolio walkthrough`}>Ask for a walkthrough</a>
+              Some of this work is confidential, so details are generalized.{" "}
+              <a href={`mailto:${email}?subject=Portfolio question`}>Ask me about my approach</a>
             </p>
           )}
           <div className="work__grid">
