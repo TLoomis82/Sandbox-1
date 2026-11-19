@@ -150,7 +150,7 @@ export function Timeline({
       )}
 
       <div className={`timeline__head ${touring ? "timeline__head--hidden" : ""}`}>
-        <button className="btn btn--small btn--primary" onClick={tour.onStart}>
+        <button className="btn btn--small btn--primary" data-track="Play my career" onClick={tour.onStart}>
           <PlayIcon size={12} /> Play my career
         </button>
 

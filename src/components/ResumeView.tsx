@@ -22,14 +22,14 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
           </div>
           <div className="resume__contact">
             <span>{profile.location}</span>
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a href={`mailto:${profile.email}`} data-track="Resume: email">{profile.email}</a>
             {profile.website && (
-              <a href={profile.website} target="_blank" rel="noopener">
+              <a href={profile.website} target="_blank" rel="noopener" data-track="Resume: website">
                 {profile.website.replace(/^https?:\/\//, "")}
               </a>
             )}
             {profile.linkedin && (
-              <a href={profile.linkedin} target="_blank" rel="noopener">
+              <a href={profile.linkedin} target="_blank" rel="noopener" data-track="Resume: LinkedIn">
                 LinkedIn
               </a>
             )}
@@ -37,7 +37,7 @@ export function ResumeView({ profile, jobs, onShowOnMap }: Props) {
         </header>
 
         <div className="resume__actions no-print">
-          <button className="btn btn--primary" onClick={() => window.print()}>
+          <button className="btn btn--primary" data-track="Resume: Download PDF" onClick={() => window.print()}>
             Download PDF
           </button>
         </div>

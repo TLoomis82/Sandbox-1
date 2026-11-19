@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { jobs as rawJobs, profile } from "./data/experience";
 import type { Job, PortfolioItem } from "./data/types";
 import { jobStart } from "./lib/dates";
-import { trackView } from "./lib/analytics";
+import { track, trackView } from "./lib/analytics";
 import { tourStopMs } from "./lib/readingTime";
 import { applyFilters, yearBounds, type Filters } from "./lib/filters";
 import { isLocated, placeKey } from "./lib/places";
@@ -163,6 +163,11 @@ export default function App() {
     if (id) setTourStep(chronological.findIndex((j) => j.id === id));
   };
   const closePanel = useCallback(() => select(null), [select]);
+  // Reports a company picked by hand. Tour stops aren't picks, so they're not counted.
+  const trackCompany = (id: string | null, source: string) => {
+    const job = id && jobs.find((j) => j.id === id);
+    if (job) track("select_company", { company_name: job.company, source });
+  };
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const changeView = (v: View) => {
     stopTour();
@@ -188,7 +193,10 @@ export default function App() {
         jobs={jobs}
         visibleIds={visibleIds}
         selectedId={selectedId}
-        onSelect={selectDuringTour}
+        onSelect={(id) => {
+          trackCompany(id, "map");
+          selectDuringTour(id);
+        }}
         dark={dark}
         intro={intro}
       />
@@ -212,9 +220,11 @@ export default function App() {
             visibleIds={visibleIds}
             selectedId={selectedId}
             // During the tour, clicking a bar jumps the tour there instead of ending it.
-            onSelect={(id) =>
-              tourStep === null ? select(id) : setTourStep(chronological.findIndex((j) => j.id === id))
-            }
+            onSelect={(id) => {
+              trackCompany(id, "timeline");
+              if (tourStep === null) select(id);
+              else setTourStep(chronological.findIndex((j) => j.id === id));
+            }}
             filters={filters}
             bounds={bounds}
             onFiltersChange={setFilters}
@@ -234,9 +244,13 @@ export default function App() {
             job={selected}
             siblings={siblings}
             email={profile.email}
-            onSelect={selectDuringTour}
+            onSelect={(id) => {
+              trackCompany(id, "same_building");
+              selectDuringTour(id);
+            }}
             onClose={closePanel}
             onOpenItem={(item, job) => {
+              track("open_work", { company_name: job.company, work_title: item.title });
               // Opening work pauses the tour rather than ending it.
               if (tourStep !== null) setTourPaused(true);
               setLightbox({ item, job });
@@ -250,6 +264,7 @@ export default function App() {
           profile={profile}
           jobs={jobs}
           onShowOnMap={(id) => {
+            trackCompany(id, "resume");
             setFilters(allFilters());
             setView("map");
             setSelectedId(id);

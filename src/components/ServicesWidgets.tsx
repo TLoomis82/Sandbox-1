@@ -43,11 +43,11 @@ export function RoleVenn() {
     <div className="venn-wrap">
       <div className={`venn venn--${active}`} onMouseLeave={() => setActive("all")}>
         {CIRCLES.map((id) => (
-          <button key={id} className={`venn__circle venn__circle--${id}`} {...bind(id)}>
+          <button key={id} className={`venn__circle venn__circle--${id}`} data-track={`Venn: ${roles[id].label}`} {...bind(id)}>
             <span>{roles[id].label}</span>
           </button>
         ))}
-        <button className="venn__center" aria-label="All three" {...bind("all")}>
+        <button className="venn__center" aria-label="All three" data-track="Venn: All three" {...bind("all")}>
           <img src="/profile.jpg" alt="" />
         </button>
       </div>
@@ -57,7 +57,7 @@ export function RoleVenn() {
           <h3>{role.title}</h3>
           <p>{role.detail}</p>
           {active !== "all" && (
-            <button className="btn btn--plain btn--small" onClick={() => setActive("all")}>
+            <button className="btn btn--plain btn--small" data-track="Venn: Now add the other two" onClick={() => setActive("all")}>
               Now add the other two
             </button>
           )}
@@ -117,6 +117,7 @@ export function StallTrack() {
             aria-selected={j === i}
             tabIndex={j === i ? 0 : -1}
             className={`stall__stop ${j <= i ? "is-past" : ""}`}
+            data-track={`Project stage: ${x.stage}`}
             onClick={() => setI(j)}
           >
             {x.stage}

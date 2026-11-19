@@ -64,7 +64,7 @@ export function SideProjectsView({ onOpenStory }: Props) {
           ))}
         </div>
         <div className="sp-banner__inner">
-          <button className="sp-poster" onClick={onOpenStory} aria-label="Open The Story Maker">
+          <button className="sp-poster" onClick={onOpenStory} aria-label="Open The Story Maker" data-track="Story Maker: poster">
             <StoryPoster />
           </button>
           <div className="sp-banner__text">
@@ -77,7 +77,7 @@ export function SideProjectsView({ onOpenStory }: Props) {
             <p className="sp-banner__comps">
               <em>Pete's Dragon</em> meets <em>Bridge to Terabithia</em>.
             </p>
-            <button className="btn btn--primary btn--large" onClick={onOpenStory}>
+            <button className="btn btn--primary btn--large" onClick={onOpenStory} data-track="Story Maker: Enter the story">
               <PlayIcon /> Enter the story
             </button>
             <p className="sp-banner__note">A scroll-driven trailer. Best with sound off and the lights low.</p>

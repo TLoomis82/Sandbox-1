@@ -32,7 +32,7 @@ export function TopBar({ profile, view, onViewChange, onHome }: Props) {
   const index = TABS.findIndex((t) => t.view === view);
   return (
     <header className="topbar">
-      <button className="topbar__id glass" onClick={onHome} aria-label="Home" title="Home">
+      <button className="topbar__id glass" data-track="Top bar: name (home)" onClick={onHome} aria-label="Home" title="Home">
         <img className="topbar__avatar" src="/profile.jpg" alt="" />
         <span className="topbar__name">{profile.name}</span>
       </button>
@@ -51,7 +51,7 @@ export function TopBar({ profile, view, onViewChange, onHome }: Props) {
         ))}
       </div>
 
-      <a className="btn btn--primary topbar__contact" href={`mailto:${profile.email}`}>
+      <a className="btn btn--primary topbar__contact" data-track="Top bar: Get in touch" href={`mailto:${profile.email}`}>
         Get in touch
       </a>
     </header>

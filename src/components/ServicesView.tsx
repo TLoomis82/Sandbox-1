@@ -96,16 +96,17 @@ export function ServicesView({ profile, onSeeWork }: Props) {
             so they use it. Contract, project, or fractional.
           </p>
           <div className="intro__actions">
-            <a className="btn btn--primary btn--large" href={contact}>
+            <a className="btn btn--primary btn--large" href={contact} data-track="Start a project">
               Start a project <ArrowIcon />
             </a>
-            <button className="btn btn--glass btn--large" onClick={onSeeWork}>
+            <button className="btn btn--glass btn--large" onClick={onSeeWork} data-track="See the work">
               See the work
             </button>
           </div>
         </div>
         <button
           className="svc-hero__scroll"
+          data-track="Scroll to explore"
           onClick={() => document.getElementById("svc-start")?.scrollIntoView({ behavior: "smooth" })}
         >
           Scroll to explore
@@ -162,6 +163,7 @@ export function ServicesView({ profile, onSeeWork }: Props) {
               key={s.id}
               className="starter__chip"
               aria-pressed={starterId === s.id}
+              data-track={`Starting point: ${s.label}`}
               onClick={() => setStarterId((id) => (id === s.id ? null : s.id))}
             >
               {s.label}
@@ -174,7 +176,7 @@ export function ServicesView({ profile, onSeeWork }: Props) {
               <p className="eyebrow">Start with a {starter.engagement.toLowerCase()}</p>
               <p>{starter.plan}</p>
             </div>
-            <a className="btn btn--primary" href={starterMail!}>
+            <a className="btn btn--primary" href={starterMail!} data-track={`Start here: ${starter.label}`}>
               Start here <ArrowIcon />
             </a>
           </div>
@@ -244,6 +246,7 @@ export function ServicesView({ profile, onSeeWork }: Props) {
               <a
                 className={`btn ${e.featured ? "btn--primary" : "btn--plain"}`}
                 href={engagementMail(profile.email, e)}
+                data-track={`Ask about: ${e.name}`}
               >
                 Ask about a {e.name.toLowerCase()}
               </a>
@@ -271,11 +274,11 @@ export function ServicesView({ profile, onSeeWork }: Props) {
       <section className="svc-cta reveal">
         <h2>Have data that isn't pulling its weight?</h2>
         <p>Tell me what you're working with. I'll reply with where I think the opportunity is, no strings attached.</p>
-        <a className="btn btn--primary btn--large" href={contact}>
+        <a className="btn btn--primary btn--large" href={contact} data-track="Tell me about your data">
           Tell me about your data <ArrowIcon />
         </a>
         <p className="svc-cta__email">
-          or email <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          or email <a href={`mailto:${profile.email}`} data-track="Services footer email">{profile.email}</a>
         </p>
       </section>
     </main>

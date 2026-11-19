@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowIcon, CloseIcon } from "./icons";
+import { track } from "../lib/analytics";
 
 /**
  * One still and its camera move. The image fills the screen ("cover"), then
@@ -195,6 +196,7 @@ export function StoryMaker({ email, onClose }: Props) {
     let raf = 0;
     let shown = new Set<number>();
     let lastK = -1;
+    let furthest = 0;
 
     const readScroll = () => {
       const max = Math.max(1, el.scrollHeight - el.clientHeight);
@@ -235,6 +237,11 @@ export function StoryMaker({ email, onClose }: Props) {
       if (f.k !== lastK) {
         lastK = f.k;
         setK(f.k);
+        // Once per scene, the first time it's reached, so the drop-off point shows in analytics.
+        if (f.k > furthest) {
+          furthest = f.k;
+          track("story_progress", { scene_number: f.k + 1, scene_name: SHOTS[f.k].kicker });
+        }
       }
       setStarted(pos > 0.04);
       setCtaLive(f.cta > 0.6);
@@ -322,12 +329,13 @@ export function StoryMaker({ email, onClose }: Props) {
             "Hi Tyler,\n\nI'd like to know more about The Story Maker.\n\n",
           )}`}
           tabIndex={ctaLive ? 0 : -1}
+          data-track="Story Maker: Want to know more about the script"
         >
           Want to know more about the script? <ArrowIcon />
         </a>
       </div>
 
-      <button className="icon-btn sm__close" onClick={onClose} aria-label="Close The Story Maker">
+      <button className="icon-btn sm__close" data-track="Story Maker: close" onClick={onClose} aria-label="Close The Story Maker">
         <CloseIcon />
       </button>
     </div>

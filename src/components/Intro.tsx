@@ -53,16 +53,16 @@ export function Intro({ profile, visible, onTour, onExplore, onResume, onService
         <p className="intro__headline">{profile.headline}</p>
         <p className="intro__tagline">{profile.tagline}</p>
         <div className="intro__actions">
-          <button className="btn btn--primary btn--large" onClick={onTour} tabIndex={tab}>
+          <button className="btn btn--primary btn--large" onClick={onTour} tabIndex={tab} data-track="Home: Take the tour">
             <PlayIcon /> Take the tour
           </button>
-          <button className="btn btn--glass btn--large" onClick={onExplore} tabIndex={tab}>
+          <button className="btn btn--glass btn--large" onClick={onExplore} tabIndex={tab} data-track="Home: Explore the map">
             Explore the map
           </button>
-          <button className="btn btn--link" onClick={onResume} tabIndex={tab}>
+          <button className="btn btn--link" onClick={onResume} tabIndex={tab} data-track="Home: Resume">
             Resume
           </button>
-          <button className="btn btn--link" onClick={onServices} tabIndex={tab}>
+          <button className="btn btn--link" onClick={onServices} tabIndex={tab} data-track="Home: Services">
             Services
           </button>
         </div>
