@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { jobs as rawJobs, profile } from "./data/experience";
 import type { Job, PortfolioItem } from "./data/types";
 import { jobStart } from "./lib/dates";
+import { trackView } from "./lib/analytics";
 import { tourStopMs } from "./lib/readingTime";
 import { applyFilters, yearBounds, type Filters } from "./lib/filters";
 import { isLocated, placeKey } from "./lib/places";
@@ -82,6 +83,10 @@ export default function App() {
   useEffect(() => {
     history.replaceState(null, "", view === "map" ? location.pathname : `#${view}`);
   }, [view]);
+
+  useEffect(() => {
+    trackView(story ? "story" : view);
+  }, [view, story]);
 
   // Guided tour: oldest role to newest. The timeline's progress bar times each
   // stop and calls nextStop when it fills, so pausing freezes the countdown.
